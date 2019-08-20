@@ -2,6 +2,7 @@ import React from "react";
 import InputTarea from "./inputTarea.js";
 import Lista from "./lista.js";
 import Modal from "./modal.js";
+import DateToday from "./date.js";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
@@ -23,7 +24,7 @@ export class Home extends React.Component {
 	cambiarvalor(valor) {
 		let nuevo = this.state.datosLista;
 		fetch(
-			"https://3000-f3f09454-7985-4bfc-b8e6-01bceb2fc044.ws-us0.gitpod.io/api/todo/" +
+			"https://3000-e0c7cff7-bf0b-4e5f-88f9-d55625650990.ws-us0.gitpod.io/api/todo/" +
 				this.state.userActive,
 			{
 				method: "POST",
@@ -42,7 +43,7 @@ export class Home extends React.Component {
 	}
 	obtenerListado() {
 		fetch(
-			"https://3000-f3f09454-7985-4bfc-b8e6-01bceb2fc044.ws-us0.gitpod.io/api/todo/"
+			"https://3000-e0c7cff7-bf0b-4e5f-88f9-d55625650990.ws-us0.gitpod.io/api/todo/"
 		)
 			.then(resp => {
 				return resp.json();
@@ -68,6 +69,7 @@ export class Home extends React.Component {
 		return (
 			<div className="container ">
 				<h1>Tareas por hacer</h1>
+				<DateToday />
 				<p className="float-right ">filter</p>
 				<i className="fas fa-filter float-right " />
 				<div className="input ">
