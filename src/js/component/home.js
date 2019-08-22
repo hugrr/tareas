@@ -15,43 +15,11 @@ export class Home extends React.Component {
 			datosLista: [],
 			userActive: "1"
 		};
-
-		this.cambiarvalor = this.cambiarvalor.bind(this);
+		this.saveInput = this.saveInput.bind(this);
 
 		this.obtenerListado = this.obtenerListado.bind(this);
 	}
 
-	cambiarvalor(valor) {
-		let nuevo = this.state.datosLista;
-		fetch(
-			"https://3000-e0c7cff7-bf0b-4e5f-88f9-d55625650990.ws-us0.gitpod.io/api/todo/" +
-				this.state.userActive,
-			{
-				method: "POST",
-				body: JSON.stringify({
-					label: valor,
-					done: false,
-					username: "1"
-				}),
-				headers: {
-					"Content-Type": "application/json"
-				}
-			}
-		)
-			.then(res => res.json())
-			.then(response => this.obtenerListado());
-	}
-	obtenerListado() {
-		fetch(
-			"https://3000-e0c7cff7-bf0b-4e5f-88f9-d55625650990.ws-us0.gitpod.io/api/todo/"
-		)
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				this.setState({ datosLista: data });
-			});
-	}
 	componentDidMount() {
 		this.obtenerListado();
 	}
@@ -65,6 +33,37 @@ export class Home extends React.Component {
 			datosLista: eliminar
 		});
 	}
+	saveInput(data) {
+		fetch(
+			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/" +
+				this.state.userActive,
+			{
+				method: "POST",
+				body: JSON.stringify({
+					label: data.inputText,
+					done: false,
+					username: "1"
+				}),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			}
+		)
+			.then(res => res.json())
+			.then(response => this.obtenerListado());
+	}
+	obtenerListado() {
+		fetch(
+			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/"
+		)
+			.then(resp => {
+				return resp.json();
+			})
+			.then(data => {
+				this.setState({ datosLista: data });
+			});
+	}
+
 	render() {
 		return (
 			<div className="container ">
@@ -72,9 +71,7 @@ export class Home extends React.Component {
 				<DateToday />
 				<p className="float-right ">filter</p>
 				<i className="fas fa-filter float-right " />
-				<div className="input ">
-					<InputTarea valor={this.cambiarvalor} />
-				</div>
+
 				<Lista
 					borrar={this.borrar}
 					datosLista={this.state.datosLista}
@@ -94,7 +91,7 @@ export class Home extends React.Component {
 								<i className="fas fa-plus" />
 							</button>
 						</p>
-						<Modal />
+						<Modal saveInput={this.saveInput} />
 					</div>
 				</div>
 			</div>
