@@ -8,15 +8,15 @@ const DateToday = props => {
 		return i;
 	}
 
-	var hoy = new Date();
-	var dd = hoy.getDate();
-	var mm = hoy.getMonth() + 1;
-	var yyyy = hoy.getFullYear();
+	let hoy = new Date();
+	let dd = hoy.getDate();
+	let mm = hoy.getMonth() + 1;
+	let yyyy = hoy.getFullYear();
 
 	dd = addZero(dd);
 	mm = addZero(mm);
 
-	return dd + "/" + mm + "/" + yyyy;
+	return yyyy + "/" + mm + "/" + dd;
 };
 
 export default DateToday;

@@ -1,5 +1,5 @@
 import React from "react";
-import InputTarea from "./inputTarea.js";
+
 import Lista from "./lista.js";
 import Modal from "./modal.js";
 import DateToday from "./date.js";
@@ -23,16 +23,11 @@ export class Home extends React.Component {
 	componentDidMount() {
 		this.obtenerListado();
 	}
-	borrar(valor) {
-		let eliminar = this.state.datosLista;
-		eliminar = eliminar.filter(item => {
-			return item !== valor;
-		});
 
-		this.setState({
-			datosLista: eliminar
-		});
+	formato(texto) {
+		return texto.replace(/^(\d{2})-(\d{2})-(\d{4})$/g, "$3/$2/$1");
 	}
+
 	saveInput(data) {
 		fetch(
 			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/" +
@@ -41,6 +36,7 @@ export class Home extends React.Component {
 				method: "POST",
 				body: JSON.stringify({
 					label: data.inputText,
+					date_event: this.formato(data.date_event),
 					done: false,
 					username: "1"
 				}),
@@ -69,6 +65,7 @@ export class Home extends React.Component {
 			<div className="container ">
 				<h1>Tareas por hacer</h1>
 				<DateToday />
+				<label className="float-right ">liberar seeccionados</label>
 				<p className="float-right ">filter</p>
 				<i className="fas fa-filter float-right " />
 

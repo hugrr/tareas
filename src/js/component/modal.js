@@ -1,5 +1,5 @@
 import React from "react";
-import InputTarea from "./inputTarea.js";
+
 import PropTypes from "prop-types";
 
 //create your first component
@@ -7,7 +7,8 @@ export default class Modal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			imputText: ""
+			imputText: "",
+			date_event: ""
 		};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,27 +38,27 @@ export default class Modal extends React.Component {
 					<div className="modal-content">
 						<div className="modal-header">
 							<h5 className="modal-title" id="exampleModalLabel">
-								Modal title
+								Crear Tarea
 							</h5>
-							<div className="input-group input-group-lg">
-								<button
-									type="button"
-									className="close"
-									data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
+							<div className="input-group input-group-lg" />
 							<div className="modal-body">
-								<div className="input-group-prepend">
-									<label>Crear Tarea</label>
-								</div>
-
+								<div className="input-group-prepend" />
+								<label htmlFor="inputDate">Fecha Evento</label>
+								<input
+									id="date"
+									name="date_event"
+									onChange={this.handleInputChange}
+									type="date"
+									className="form-control"
+								/>
+								<label htmlFor="inputDate">
+									Descripcion Tarea
+								</label>
 								<input
 									type="text"
 									name="inputText"
 									onChange={this.handleInputChange}
-									classNAme="form-control"
+									className="form-control"
 									aria-label="Sizing example input"
 									aria-describedby="inputGroup-sizing-lg"
 								/>
@@ -71,7 +72,8 @@ export default class Modal extends React.Component {
 								className="btn btn-primary btn-lg"
 								onClick={() => {
 									this.props.saveInput({
-										inputText: this.state.inputText
+										inputText: this.state.inputText,
+										date_event: this.state.date_event
 									});
 								}}
 								data-dismiss="modal">
