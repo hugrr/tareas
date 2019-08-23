@@ -13,15 +13,73 @@ export class Home extends React.Component {
 		super(props);
 		this.state = {
 			datosLista: [],
-			userActive: "1"
+			items: []
 		};
 		this.saveInput = this.saveInput.bind(this);
 
 		this.obtenerListado = this.obtenerListado.bind(this);
+		this.handleInputChange2 = this.handleInputChange2.bind(this);
+		this.deleteData = this.deleteData.bind(this);
 	}
 
 	componentDidMount() {
 		this.obtenerListado();
+	}
+
+	handleInputChange2(event) {
+		console.log(event.target.value);
+		const target = event.target;
+		const value =
+			target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		console.log(name);
+		console.log(value);
+		if (value) {
+			console.log("aqui 1");
+			let elems = this.state.items;
+			elems.push(target.value);
+			this.setState({
+				items: elems
+			});
+		} else {
+			console.log("aqui 2");
+			let elems = this.state.items;
+			const items = elems.filter(item => {
+				return item !== target.value;
+			});
+			this.setState({
+				items: items
+			});
+		}
+	}
+
+	deleteTareas = () => {
+		let elems = this.state.items;
+		elems.map(item => {
+			this.deleteData(item);
+		});
+		this.setState({
+			items: []
+		});
+	};
+
+	deleteData(id) {
+		fetch(
+			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/" +
+				id,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json"
+				}
+			}
+		)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				console.log("Elemento Eliminado");
+				this.obtenerListado();
+			});
 	}
 
 	formato(texto) {
@@ -30,15 +88,14 @@ export class Home extends React.Component {
 
 	saveInput(data) {
 		fetch(
-			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/" +
-				this.state.userActive,
+			"https://3000-ca544b2a-814d-4e3b-8a40-35ccdf5e36fd.ws-us0.gitpod.io/api/todo/",
 			{
 				method: "POST",
 				body: JSON.stringify({
 					label: data.inputText,
 					date_event: this.formato(data.date_event),
 					done: false,
-					username: "1"
+					username: "user"
 				}),
 				headers: {
 					"Content-Type": "application/json"
@@ -67,11 +124,16 @@ export class Home extends React.Component {
 				<DateToday />
 				<label className="float-right ">liberar seeccionados</label>
 				<p className="float-right ">filter</p>
-				<i className="fas fa-filter float-right " />
+				<i
+					style={{ cursor: "pointer" }}
+					className="fas fa-filter float-right "
+					onClick={() => this.deleteTareas()}
+				/>
 
 				<Lista
 					borrar={this.borrar}
 					datosLista={this.state.datosLista}
+					handleInputChange2={this.handleInputChange2}
 				/>
 				<div
 					className="card border-dark mb-3 text-center

@@ -19,6 +19,9 @@ const Lista = props => {
 						<input
 							type="checkbox"
 							aria-label="Checkbox for following text input"
+							name={"item-" + item.id}
+							value={item.id}
+							onChange={e => props.handleInputChange2(e)}
 						/>
 					</div>
 				</div>
@@ -37,6 +40,9 @@ const Lista = props => {
 						<input
 							type="checkbox"
 							aria-label="Checkbox for following text input"
+							name={"item-" + item.id}
+							value={item.id}
+							onChange={e => props.handleInputChange2(e)}
 						/>
 					</div>
 				</div>
@@ -55,6 +61,9 @@ const Lista = props => {
 						<input
 							type="checkbox"
 							aria-label="Checkbox for following text input"
+							name={"item-" + item.id}
+							value={item.id}
+							onChange={e => props.handleInputChange2(e)}
 						/>
 					</div>
 				</div>
@@ -67,7 +76,7 @@ const Lista = props => {
 
 Lista.propTypes = {
 	datosLista: PropTypes.array,
-
+	handleInputChange2: PropTypes.func,
 	borrar: PropTypes.func
 };
 export default Lista;
